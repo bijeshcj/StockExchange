@@ -5,9 +5,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,10 +44,26 @@ public class StockexchangeApplication {
 	private static void findElement(WebDriver webDriver){
 		List<WebElement> elements = webDriver.findElements(By.name("companyED"));
 		System.out.println("Number of elements:" +elements.size());
-
+        WebElement element = null;
 		for (int i=0; i<elements.size();i++){
-			System.out.println("Radio button text:" + elements.get(i).getAttribute("value"));
+			element = elements.get(i);
+//			System.out.println("Radio button text:" + elements.get(i).getAttribute("value"));
+			WebDriverWait wait = new WebDriverWait(webDriver, 20);
+			wait.until(ExpectedConditions.elementToBeClickable(element));
+
+			element.sendKeys("DHFL");
+			try{
+				Thread.sleep(3000);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+			element.sendKeys(Keys.RETURN);
+			System.out.println("$$$ Executed...");
 		}
+
+//		WebDriverWait wait = new WebDriverWait(webDriver, 5);
+//		wait.until(ExpectedConditions.(element,"DHFL"));
+
 	}
 
 
