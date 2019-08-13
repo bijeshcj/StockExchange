@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 @RestController
@@ -51,6 +52,7 @@ public class StockexchangeApplication {
 			WebDriverWait wait = new WebDriverWait(webDriver, 20);
 			wait.until(ExpectedConditions.elementToBeClickable(element));
 
+
 			element.sendKeys("DHFL");
 			try{
 				Thread.sleep(3000);
@@ -59,6 +61,13 @@ public class StockexchangeApplication {
 			}
 			element.sendKeys(Keys.RETURN);
 			System.out.println("$$$ Executed...");
+			webDriver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);
+//			String kk = webDriver.findElement(By.xpath("//*[@id='show_hide_content']/.//span[contains(@class,'show_hide')]")).getAttribute("innerHTML");
+//            System.out.println("$$$ kk "+kk);
+
+			WebElement elementPer = webDriver.findElement(By.id("deliveryToTradedQuantity"));
+			System.out.println("$$$ "+elementPer.getText());
+			break;
 		}
 
 //		WebDriverWait wait = new WebDriverWait(webDriver, 5);
